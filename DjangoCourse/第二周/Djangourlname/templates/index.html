@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>name参数</title>
+    </head>
+    <body>
+    {# url是固定写法，表示当前要加载的是url地址。'add'表示url路由对应的name参数值。   #}
+    {# 含义：要加载name="add"的这个url地址。   #}
+    <a href="{% url 'add' %}">访问第一个url路由</a>
+    <a href="{% url 'add' %}">访问第一个url路由</a>
+    <a href="{% url 'add' %}">访问第一个url路由</a>
+    <a href="{% url 'add' %}">访问第一个url路由</a>
+    <br>
+    {#通过name的值"add1",反向获取带有参数的url地址    #}
+    <a href="{% url 'add1' 10 25 %}">计算</a>
+    <a href="{% url 'add1' 20 25 %}">计算</a>
+    <a href="{% url 'add1' 30 25 %}">计算</a>
+    <a href="{% url 'add1' 40 25 %}">计算</a>
+
+    </body>
+</html>

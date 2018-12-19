@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% block content %}
+    <title>天天生鲜-商品详情</title>
+{% endblock %}
+{% block body %}
+    <div class="header_con">
+		<div class="header">
+			<div class="welcome fl">欢迎来到天天生鲜!</div>
+			<div class="fr">
+                {% if request.session.username %}
+                    <div class="login_btn fl">
+					欢迎您：<em>{{ request.session.username }}</em>
+				    </div>
+                    <div class="user_link fl">
+					<span>|</span>
+					<a href="/user_center_info/">用户中心</a>
+					<span>|</span>
+					<a href="/cart/">我的购物车</a>
+					<span>|</span>
+					<a href="/user_center_order/">我的订单</a>
+                    <span>|</span>
+					<a href="/logout/">退出</a>
+				    </div>
+                {% else %}
+                    <div class="login_btn fl">
+					<a href="/login/">登录</a>
+					<span>|</span>
+					<a href="/register/">注册</a>
+				    </div>
+                {% endif %}
+
+
+
+			</div>
+		</div>
+	</div>
+	<div class="search_bar clearfix">
+		<a href="/index/" class="logo fl"><img src="/static/images/logo.png"></a>
+		<div class="search_con fl">
+			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
+			<input type="button" class="input_btn fr" name="" value="搜索">
+		</div>
+		<div class="guest_cart fr">
+			<a href="/cart/" class="cart_name fl">我的购物车</a>
+			<div class="goods_count fl" id="show_count">{{ str_a }}</div>
+		</div>
+	</div>
+	<div class="breadcrumb">
+		<a href="#">全部分类</a>
+		<span>></span>
+		<a href="#">新鲜水果</a>
+		<span>></span>
+		<a href="#">商品详情</a>
+	</div>
+	<div class="goods_detail_con clearfix">
+
+
+		<div class="goods_detail_pic fl"><img src="/static/{{ food.food_image }}"></div>
+		<div class="goods_detail_list fr">
+			<h3>{{ food.food_name }}</h3>
+			<p>{{ shop_detail.shop_detail }}</p>
+			<div class="prize_bar">
+				<span class="show_pirze">¥<em>{{ food.food_price }}</em></span>
+				<span class="show_unit">单  位：500g</span>
+			</div>
+			<div class="goods_num clearfix">
+				<div class="num_name fl">数 量：{{ food.food_count }}</div>
+				<div class="num_add fl">
+					<input type="text" class="num_show fl" value="1">
+					<a href="javascript:" class="add fr" onclick="add({{ food.id }},1)">+</a>
+					<a href="javascript:" class="minus fr" onclick="add({{ food.id }},0)">-</a>
+				</div>
+			</div>
+			<div class="total">总价：<em>16.80元</em></div>
+			<div class="operate_btn">
+				<a href="/place_order/" class="buy_btn">立即购买</a>
+				<a href="javascript:;" class="add_cart" id="add_cart">加入购物车</a>
+			</div>
+		</div>
+	</div>
+	<div class="main_wrap clearfix">
+		<div class="l_wrap fl clearfix">
+			<div class="new_goods">
+				<h3>新品推荐</h3>
+				<ul>
+                    {% for shop in sort_shop|slice:'0:2' %}
+                        <li>
+                        {% for sort in food_type %}
+						<a href="{% url 'detail' %}?type={{ sort.id }}&detail={{ shop.id }}">{% endfor %}<img src="/static/{{ shop.food_image }}"></a>
+                            <h4>
+                            {% for sort in food_type %}
+                                <a href="{% url 'detail' %}?type={{ sort.id }}&detail={{ shop.id }}">{% endfor %}{{ shop.food_name }}</a>
+                            </h4>
+						<div class="prize">￥{{ shop.food_price }}</div>
+					    </li>
+                    {% endfor %}
+				</ul>
+			</div>
+		</div>
+
+		<div class="r_wrap fr clearfix">
+			<ul class="detail_tab clearfix">
+				<li class="active">商品介绍</li>
+				<li>评论</li>
+			</ul>
+			<div class="tab_content">
+				<dl>
+					<dt>商品详情：</dt>
+					<dd>{{ shop_detail.shop_intro }} </dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+    {% block script %}
+        <div class="add_jump"></div>
+        <script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+        <script type="text/javascript"></script>
+        <script>
+            $('[id="add_cart"]').click(function () {
+                alert("ok");
+                $.ajax({
+                    data:{
+                        'food_name_id':{{ food.id }},
+                        'price':{{ food.food_price }},
+                        'add_or_minus':'1',
+                        code:1
+                        },
+                    type:'get',
+                    url:{% url 'shop_cart' %}
+                });
+            });
+
+            function add(food_id,add_or_minus) {
+                alert('ok');
+                $.ajax({
+                    data:{
+                        food_name_id:food_id,
+                        add_or_minus:add_or_minus
+                    },
+                    success:function () {
+                        if (data=="ok"){
+                            alert('修改购物车成功')
+                        }
+                    },
+                    type:'get',
+                    url:{% url 'shop_cart' %}
+                });
+            }
+        </script>
+    {% endblock %}

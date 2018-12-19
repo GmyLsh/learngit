@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>首页</title>
+    </head>
+    <body>
+        {% if request.session.username %}
+            {# 通过去session中获取username(request.session['username'] = uname) 如果能够获取到，说明用户登录了。反之就是没有登录。#}
+            <h1>用户：{{ request.session.username }}</h1>
+            <p>成功登录并进入首页。。。</p>
+            <a href="/logout/">退出</a>
+        {% else %}
+            <a href="/login/">登录</a>
+            <a href="#" id="register">注册</a>
+        {% endif %}
+        <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+        <script>
+            {# $.ajaxSetup可以对所有的ajax请求进行全局配置的方法。       #}
+            $.ajaxSetup({
+                data:{
+                    'csrfmiddlewaretoken':'{{ csrf_token }}'
+                }
+            });
+            $('#register').click(function () {
+                $.ajax({
+                    url:'/register',
+                    type:'POST',
+                    data:{
+                        'username':'zhangsan',
+                        'password':'1234565'
+                    },
+                    success:function (data,status) {
+                        {#ajax 发送请求之后，如果需要重定向只需要发送结果给ajax，views.py就不能进行重定向了，需要让ajax进行重定向。#}
+                        if (data=='ok'){
+                            window.location.href='/login/'
+                        }else {
+                            alert('失败');
+                        }
+
+                    }
+                })
+            })
+        </script>
+    </body>
+</html>

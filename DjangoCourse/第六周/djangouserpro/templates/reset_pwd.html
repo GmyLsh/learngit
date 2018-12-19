@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>修改密码</title>
+
+    <!-- Bootstrap 核心css文件-->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/signin.css' %}">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .errorput{
+            border-color: red;
+        {#      阴影      #}
+            box-shadow: 0 0 5px purple;
+        }
+
+    </style>
+  </head>
+  <body>
+
+    <div class="container">
+
+      <form class="form-signin" action="/reset_pwd/{{ code }}/" method="post">
+          {% csrf_token %}
+        <h2 class="form-signin-heading text-center">验证通过，请修改您的密码</h2>
+        <input type="text" name="email" value="{{ email }}" class="hidden">
+        <label for="inputEmail" class="sr-only">新密码</label>
+        <input name="password" type="password" id="inputEmail" class="form-control  errorput " placeholder="请输入新密码" value="">
+        <label for="inputPassword" class="sr-only">确认密码</label>
+        <input name="r_password" type="password" id="inputPassword" class="form-control  errorput " placeholder="请确认您的密码" value="">
+        <h5 class="text-center text-danger">{{ error }}</h5>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">提交修改</button>
+
+      </form>
+
+    </div> <!-- /container -->
+
+
+    <!-- 引入jquery.js必须在引入bootstrapjs之前 -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  </body>
+</html>
+
+

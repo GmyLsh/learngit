@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% block content %}
+    <title>天天生鲜-商品列表</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+{% endblock %}
+{% block html %}
+<body>
+	<div class="header_con">
+		<div class="header">
+			<div class="welcome fl">欢迎来到天天生鲜!</div>
+			<div class="fr">
+                {% if request.session.username %}
+                    <div class="login_btn fl">
+					欢迎您：<em>{{ request.session.username }}</em>
+                    </div>
+                    <div class="user_link fl">
+					<span>|</span>
+					<a href="/user_center_info/">用户中心</a>
+					<span>|</span>
+					<a href="/cart/">我的购物车</a>
+					<span>|</span>
+					<a href="/user_center_order/">我的订单</a>
+                    <span>|</span>
+					<a href="/logout/">退出</a>
+				</div>
+                {% else %}
+                    <div class="login_btn fl">
+					<a href="/login/">登录</a>
+					<span>|</span>
+					<a href="/register/">注册</a>
+				    </div>
+                {% endif %}
+			</div>
+		</div>
+	</div>
+
+	<div class="search_bar clearfix">
+		<a href="/index/" class="logo fl"><img src="/static/images/logo.png"></a>
+		<div class="search_con fl">
+			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
+			<input type="button" class="input_btn fr" name="" value="搜索">
+		</div>
+		<div class="guest_cart fr">
+			<a href="/cart/" class="cart_name fl">我的购物车</a>
+			<div class="goods_count fl" id="goods_count fl"></div>
+		</div>
+	</div>
+
+	<div class="navbar_con">
+		<div class="navbar clearfix">
+			<div class="subnav_con fl">
+				<h1>全部商品分类</h1>
+				<span></span>
+				<ul class="subnav">
+					<li><a href="{% url 'list' %}?type={{ type_id }}" class="fruit">新鲜水果</a></li>
+					<li><a href="#" class="seafood">海鲜水产</a></li>
+					<li><a href="#" class="meet">猪牛羊肉</a></li>
+					<li><a href="#" class="egg">禽类蛋品</a></li>
+					<li><a href="#" class="vegetables">新鲜蔬菜</a></li>
+					<li><a href="#" class="ice">速冻食品</a></li>
+				</ul>
+			</div>
+			<ul class="navlist fl">
+				<li><a href="">首页</a></li>
+				<li class="interval">|</li>
+				<li><a href="">手机生鲜</a></li>
+				<li class="interval">|</li>
+				<li><a href="">抽奖</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="breadcrumb">
+		<a href="#">全部分类</a>
+		<span>></span>
+
+		<a href="#">新鲜水果</a>
+	</div>
+
+	<div class="main_wrap clearfix">
+		<div class="l_wrap fl clearfix">
+			<div class="new_goods">
+				<h3>新品推荐</h3>
+				<ul>
+                    {% for food in food_type|slice:'0:2' %}
+                        <li>
+						<a href="{% url 'detail' %}?type={{ type_id }}&detail={{ food.id }}"><img src="/static/{{ food.food_image }}"></a>
+						<h4><a href="{% url 'detail' %}?type={{ type_id }}&detail={{ food.id }}">{{ food.food_name }}</a></h4>
+						<div class="prize">￥{{ food.food_price }}</div>
+					    </li>
+                    {% endfor %}
+				</ul>
+			</div>
+		</div>
+
+		<div class="r_wrap fr clearfix">
+			<div class="sort_bar">
+				<a href="#" class="active">默认</a>
+				<a href="#">价格</a>
+				<a href="#">人气</a>
+			</div>
+
+			<ul class="goods_type_list clearfix">
+                {% for food in page.object_list %}
+                    <li>
+					<a href="{% url 'detail' %}?type={{ type_id }}&detail={{ food.id }}"><img src="/static/{{ food.food_image }}"></a>
+                        <input type="hidden" class="get_word_{{ food.id }}" value="{{ food.id }}">
+					<h4><a href="{% url 'detail' %}?type={{ type_id }}&detail={{ food.id }}">{{ food.food_name }}</a></h4>
+					<div class="operate">
+						<span class="prize">￥{{ food.food_price }}</span>
+						<span class="unit">{{ food.food_price }}/500g</span>
+						<a href="#" class="add_goods" id="add_goods_{{ food.id }}" title="加入购物车"></a>
+					</div>
+				    </li>
+                    <script>
+                        $('[id="add_goods_{{ food.id }}"]').click(function () {
+                            alert("ok");
+                            $.ajax({
+                                data:{
+                                    'food_name_id':$('[class="get_word_{{ food.id }}"]').val(),
+                                    'price':{{ food.food_price }},
+                                    'add_or_minus':'1',
+                                    code:1
+                                },
+                                type:'get',
+                                url:{% url 'shop_cart' %}
+                            });
+                        });
+                    </script>
+                {% endfor %}
+			</ul>
+			<div class="pagenation">
+                {% if page.has_previous %}
+                    <a href="{% url 'list' %}?type={{ type_id }}&page={{ page.previous_page_number }}"><上一页</a>
+                {% endif %}
+            {% for page_number in page.paginator.page_range %}
+                {% if page_number == page.number %}
+                    <a href="{% url 'list' %}?type={{ type_id }}&page={{ page_number }}" class="active">{{ page_number }}</a>
+                {% endif %}
+
+            {% endfor %}
+            {% if page.has_next %}
+                <a href="{% url 'list' %}?type={{ type_id }}&page={{ page.next_page_number }}">下一页></a>
+            {% endif %}
+			</div>
+		</div>
+	</div>
+</body>
+{% endblock %}

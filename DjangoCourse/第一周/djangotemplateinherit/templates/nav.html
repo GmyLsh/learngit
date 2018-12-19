@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        {% load static %}
+{#        <link rel="stylesheet" href="/static/css/index.css">#}
+        <link rel="stylesheet" href="{% static 'css/index.css' %}">
+        {# 在block块中添加的标签，就相当于是一个title的默认值，如果子模板没有重写这个title块，就是用这个默认值；如果子模板重写了这个title块，就是用子模板重写的值   #}
+        {% block title %}
+
+        {% endblock %}
+{#        <title>导航条</title>#}
+    </head>
+    <body>
+        <h1>公共的导航条</h1>
+        <span>HTML</span>
+        <span>CSS</span>
+        <span>JS</span>
+        {# 以上标签都是公共部分的内容，所有页面都要使用。 #}
+        {# 在继承的时候，会将当前文件nav.html中的所有的标签都继承过去。 #}
+        {# 如果子模板需要在当前这个页面的基础上，添加一些自己页面的内容，使用Django模板标签bolck(代码块),需要给这个块起一个名称 #}
+        {% block content %}
+
+        {% endblock %}
+    </body>
+</html>

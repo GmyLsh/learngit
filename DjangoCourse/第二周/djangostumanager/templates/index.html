@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>学生管理系统</title>
+    </head>
+    <body>
+        {# <br>换行的作用    #}
+        {# 所有的a标签都是GET请求        #}
+        <a href="/add/">添加学员</a><br>
+        <a href="/select/">查询学员</a><br>
+        <a href="/delete/">删除学员</a><br>
+        <ul>
+            {% if message %}
+                {# 如果message这个键存在，说明是没有学员信息的。      #}
+                <h1>{{ message }}</h1>
+            {% else %}
+                {# 如果message这个键不存在，说明传过来的是结果集students #}
+                {% for student in students %}
+                    <li>ID:{{ student.id }}; NAME:{{ student.sname }}; AGE:{{ student.sage }}</li>
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>查询学员</title>
+    </head>
+    <body>
+        <a href="/index/">< 返回首页</a>
+        <hr>
+        <form action="/select/" method="post">
+            {% csrf_token %}
+            <label for="uname">ID:</label>
+            <input type="text" name="sname" id="uname" placeholder="输入学员ID">
+            <br>
+            <button type="submit">查询</button>
+        </form>
+        {% if student %}
+            <p>{{ student.id }}--{{ student.sname }}--{{ student.sage }}</p>
+        {% elif message %}
+            <h1>{{ message }}</h1>
+        {% endif %}
+    </body>
+</html>

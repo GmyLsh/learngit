@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block message_form %}
+    {#重写块，展示留言信息    #}
+    <a href="{% url 'add' %}">添加留言</a>
+    <a href="{% url 'update' %}">更新留言</a>
+    {% for message in messages %}
+            {{ message.id }}-{{ message.name }}-{{ message.email }}-{{ message.address }}-{{ message.message }}
+    {% endfor %}
+
+{% endblock %}

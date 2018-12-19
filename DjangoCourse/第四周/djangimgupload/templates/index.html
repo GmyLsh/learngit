@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片</title>
+</head>
+<body>
+<form action="/uploadimg/" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="pic">
+    <button type="submit">上传</button>
+</form>
+<img src="/media/{{ img.pic_url }}" alt="">
+</body>
+</html>

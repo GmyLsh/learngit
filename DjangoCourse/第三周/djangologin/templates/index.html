@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>首页</title>
+    </head>
+    <body>
+        <a href="#">首页</a>
+        {% if not request.user.is_authenticated %}
+            <a href="/login/">登录</a>
+            <a href="#">注册</a>
+        {% endif %}
+        <br>
+        {% if request.user.is_authenticated %}
+            {# 这个request对象就是render()渲染模板携带的request对象   #}
+            <a href="#">{{ request.user.username }}</a>
+            <a href="/logout/">退出</a>
+        {% endif %}
+    </body>
+</html>

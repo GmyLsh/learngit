@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>图片上传</title>
+    </head>
+        <body>
+            <form action="/upload/" method="post" enctype="multipart/form-data">
+                {#application/x-www-form-urlencoded: ?username='123'&password='456'适合文本 #}
+                {#multipart/form-data:以指定的分隔符对上传的数据进行分割 适合二进制文件 #}
+                {# 上传图片也相当于上传数据，一定要使用POST请求，并且要指定一个属性enctype  #}
+                {% csrf_token %}
+                <input type="file" name="picture">
+                <button type="submit">上传</button>
+            </form>
+            <img src="/static/media/{{ img.pic_url }}" alt="">
+        </body>
+</html>

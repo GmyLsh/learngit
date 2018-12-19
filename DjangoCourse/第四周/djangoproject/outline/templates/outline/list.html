@@ -1,0 +1,68 @@
+{% extends 'master.html' %}
+{% block content %}
+    <div class="container text-center zy-list">
+        <h2>{{ stage.subject.name }}阶段{{ value }} 一级大纲</h2>
+        <p>{{ stage.title }}（20天）</p>
+            {% for ol in ols %}
+
+            {% endfor %}
+            <div>
+                <h3 class="text-center">
+                    <a class="title" href="../../../program/templates/program/list.html">Python基础语法
+                        <small>（3天）</small>
+                    </a>&nbsp;&nbsp;
+                    <a class="glyphicon glyphicon-list" href="detail.html" title="一级大纲详情"></a>&nbsp;
+                    <a class="glyphicon glyphicon-edit" href="edit.html" title="修改一级大纲"></a>&nbsp;
+                    <a class="glyphicon glyphicon-remove-circle" href="#"
+                       title="删除一级大纲"></a>
+                </h3>
+
+            </div>
+
+            <div class="sub-item">
+                    环境安装 <br>
+                    编辑器,基础语法 <br>
+                    print()函数
+            </div>
+
+            <div class="text-center">
+                <i class="glyphicon glyphicon-arrow-down"></i>
+            </div>
+
+
+            <div>
+                <h3 class="text-center">
+                    <a class="title" href="/program/templates/program/list.html">Python面向对象
+                        <small>（3天）</small>
+                    </a>&nbsp;&nbsp;
+                    <a class="glyphicon glyphicon-list" href="#" title="一级大纲详情"></a>&nbsp;
+                    <a class="glyphicon glyphicon-edit" href="#" title="修改一级大纲"></a>&nbsp;
+                    <a class="glyphicon glyphicon-remove-circle" href="#"
+                       title="删除一级大纲"></a>
+                </h3>
+
+            </div>
+
+            <div class="sub-item">
+                    环境安装 <br>
+                    编辑器,基础语法 <br>
+                    print()函数
+            </div>
+
+
+            <div class="text-center">
+                <i class="glyphicon glyphicon-arrow-down"></i>
+            </div>
+
+
+        <div class="tools">
+            <a class="glyphicon glyphicon-plus-sign" href="{% url 'ol_add' %}&value={{ value }}" title="添加一级大纲"></a>
+        </div>
+    </div>
+
+    <script>
+
+    </script>
+{% endblock %}
+
+

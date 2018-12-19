@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>登录页面</title>
+    </head>
+    <body>
+        <form action="/login/" method="post">
+            {% csrf_token %}
+            <input type="text" placeholder="账号" name="username" value="{{ name }}"><br>
+            <input type="text" placeholder="密码" name="password"><br>
+            {# 添加一个是否记住用户名的功能。以后再登录这个网站，用户名自动填充。 #}
+            {# type="checkbox" 分勾选和不勾选，勾选值为1，不勾选值为0. #}
+            记住用户名：<input type="checkbox" name="box" value="1" checked><br>
+            <button type="submit">登录</button>
+        </form>
+    </body>
+</html>

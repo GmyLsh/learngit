@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        <h1>render模板渲染</h1>
+        {#{{ }}:作用就是用于加载一个变量的值。name就是变量名。 #}
+        <h1>{{ name }}</h1>
+        {#  如果是一个列表数据，可以通过索引取一个值，也可以通过for循环遍历。jinja2 #}
+        <h1>{{ books.0 }}-{{ books.1 }}-{{ books.2 }}-{{ books.3 }}-{{ books.4 }}</h1>
+        {# {%  %}:作用就是用来写for循环、if判断等条件语句的语法。  #}
+        {% for book in books %}
+            <p>{{ book }}</p>
+        {% endfor %}
+        {% if object.age < 18 %}
+            <p>未成年人</p>
+        {% elif object.age < 30 %}
+            <p>中年人</p>
+        {% else  %}
+            <p>老年人</p>
+        {% endif %}
+        {% if name %}
+            <p>name变量是存在的</p>   {% else %}
+            <p>name变量是不存在的</p>
+        {% endif %}
+        <p>{{ dict.username }}-{{ dict.password }}</p>
+        {% for key,value in dict.items %}
+            <p>{{ key }}:{{ value }}</p>
+
+        {% endfor %}
+        {# 列表的其他两种遍历方式:       #}
+        {% for book in books %}
+            {#  forloop.counter:获取循环的计数 #}
+            {#counter:计数从1开始;12345 #}
+            {#counter0:计数从0开始;01234 #}
+            {#revcounter:倒序从7开始计数;7654321 #}
+            {#revcounter0:倒序从6开始计数;6543210 #}
+{#            <p>{{ forloop.counter }}:{{ book }}</p>#}
+{#            <p>{{ forloop.counter0 }}:{{ book }}</p>#}
+{#            <p>{{ forloop.revcounter }}:{{ book }}</p>#}
+{#            <p>{{ forloop.revcounter0 }}:{{ book }}</p>#}
+{##}
+        {% endfor %}
+
+        {#  模板语言中的过滤器用法：作用主要就是对{{ 变量 }}的值进行处理。比如设置时间格式、大小写转化等。  #}
+    <p>{{ date | date:'Y-m-d h:i:s'}}</p>
+    <p>{{ dict.username | upper | lower| capfirst}}</p>
+    <p>{{ input | safe }}</p>
+
+    {# 模板语言中的内置标签:对变量的显示进行控制的标签。 #}
+    {# autoescape off:off就是关闭自动转义，通过这个内置标签可以将字符串中的<h1>字符串转化为html中<h1>标签。  #}
+    {% autoescape off %}
+        <p>{{ input }}</p>
+    {% endautoescape %}
+
+
+
+
+
+    </body>
+</html>

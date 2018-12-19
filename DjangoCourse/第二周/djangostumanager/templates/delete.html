@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>删除学员</title>
+    </head>
+    <body>
+        <a href="/index/">< 返回首页</a>
+        <hr>
+        <form action="/delete/" method="post">
+            {% csrf_token %}
+            <label for="uname">ID:</label>
+            <input type="text" name="sname" id="uname" placeholder="输入学员ID">
+            <button type="submit">删除</button>
+        </form>
+        {% if message %}
+            <h1>{{ message }}</h1>
+        {% endif %}
+    </body>
+</html>

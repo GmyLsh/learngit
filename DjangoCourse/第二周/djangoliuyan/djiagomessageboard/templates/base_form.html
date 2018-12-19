@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block message_form %}
+    {#这里的内容就是add和update抽象出来的父模板，只保存用于提交留言的表单，共add和update继承。    #}
+    <form class="smart-green" action="{{ url_name }}" method="post">
+        {% csrf_token %}
+        <h1>留言板
+            <span>请留下你的信息</span>
+        </h1>
+        {% block form_id %}
+            {# add不需要ID标签，update需要ID标签           #}
+
+        {% endblock %}
+
+
+        <label>
+            <span>姓名 :</span>
+            <input id="name" type="text" name="name" class="error" placeholder="请输入您的姓名"/>
+            <div class="error-msg"></div>
+        </label>
+
+        <label>
+            <span>邮箱 :</span>
+            <input id="email" type="email" name="email" placeholder="请输入邮箱地址"/>
+            <div class="error-msg"></div>
+        </label>
+
+        <label>
+            <span>联系地址 :</span>
+            <input id="address" type="text" name="address" placeholder="请输入联系地址"/>
+            <div class="error-msg"></div>
+        </label>
+
+        <label>
+            <span>留言 :</span>
+            <textarea id="message" name="message"  placeholder="请输入你的建议"></textarea>
+            <div class="error-msg"></div>
+        </label>
+        <div class="success-msg"></div>
+
+        <label>
+        <span></span>
+        <input type="submit" class="button" value="{{ value }}"/>
+        </label>
+    </form>
+    {% if result %}
+        <h1>{{ result }}</h1>
+    {% endif %}
+{% endblock %}

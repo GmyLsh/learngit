@@ -1,0 +1,21 @@
+{% load customtags %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Django自定义标签和过滤器</title>
+    </head>
+    <body>
+        {# 要加载自定义过滤器，需要使用Django内置标签load，加载自定义的过滤器函数  #}
+        <p>{{ name | filter_chars:4 }}</p>
+        {# 展示自定义标签，autoescape是Django框架内置的标签:load、extrends、block、for、if等。  #}
+        {% autoescape off %}
+            {% html_tag "input" "p" %}
+            {% html_tag "p" "p" %}
+        {% endautoescape %}
+        {#过滤器 |,只能用于变量{{  }}的后面，不能用于标签{%  %}的后面，而html_tag就是一个自定义的标签。所以，html_tag后面不能使用过滤器。#}
+
+{#        {% html_tag | safe %}#}
+
+    </body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Form表单的用法</title>
+    </head>
+    <body>
+        {# 点击计算按钮，有form表单向name="form"的url路由，发送一个GET请求  #}
+        <form action="{% url 'form' %}" method="get">
+            {#  一般lable和input标签都是成对出现的，label主要起到了定位光标的作用。label中的for属性需要设置为input标签的id属性。 #}
+            <label for="">数字a:</label>
+            <input id="a" type="text" placeholder="输入数字a" name="a">
+            <label for="">数字b:</label>
+            <input id="b" type="text" placeholder="输入数字b" name="b">
+            <button type="submit">计算</button>
+        </form>
+        {# 如何渲染自定义表单CustomForm？   #}
+        {# 1.<form>标签和<button type="submit">需要自己去设置       #}
+        {# 2.自定义表单 只生成input标签:      #}
+        <form action="{% url 'form' %}" method="get">
+            {{ form }}
+            {# 只有submit才能提交请求(get post)    #}
+            <button type="submit">计算</button>
+        </form>
+        <form action="{% url 'form' %}" method="post">
+            {# csrf_token:主要是为了防止一些跨站请求防伪攻击，每次在刷新页面的时候，Django的csrf中间件会动态生成一个吟唱的input标签，他的value是一个孙吉字符串，加载到页面源代码中，同时Django框架会将这一次生成的随机字符串保存到自己的数据库。等form发送POST请求时，除了表单数据以外，浏览器会自动将这个吟隐藏的input标签的值也携带上，提交给Django后台，Django的中间件就会对这个加密的随机字符串和数据库进行对比，如果一致，说明是正常的请求，如果不一致，Django就会出现403拒绝请求的页面，认为是一个非法的请求。  #}
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit">计算</button>
+        </form>
+    </body>
+</html>

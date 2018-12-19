@@ -1,0 +1,54 @@
+{% extends 'master.html' %}
+{% block body %}
+    <div class="header">
+        <div class="container">
+            <h2>修改密码</h2>
+        </div>
+    </div>
+    <div class="container">
+        <form action="{% url 'user_update_pwd' %}" method="post">
+            {% csrf_token %}
+            <dl>
+                <dt>原密码</dt>
+                <dd><input type="text" placeholder="" name="pwd" required>  <span id="message"></span></dd>
+                <dt>新密码</dt>
+                <dd><input type="text" placeholder="" name="n_pwd" required></dd>
+                <dt>确认新密码</dt>
+                <dd><input type="text" placeholder="" name="c_n_pwd"></dd>
+            </dl>
+            <button type="submit">修改</button>
+        </form>
+        <hr>
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+        {#对输入的原密码进行输入检测，如果原密码不正确直接提示错误即可。       #}
+        {#先获取输入的原密码输入框  #}
+        pwd=$('input[name="pwd"]');
+        {#给这个输入框绑定blur事件 #}
+        pwd.blur(function () {
+            if (pwd.val()!=''){
+                {#一旦光标失去焦点，会触发这个事件，此时可以检测原密码是否正确。就能通过ajax请求完成。    #}
+                $.ajax({
+                url: {% url 'user_check_pwd' %},
+                data:{
+                    'pwd':pwd.val()
+                },
+                success:function (data, status) {
+                    if (data == 'Success'){
+                    {# 密码正确，提示信息   #}
+                        $('#message').text('原密码正确');
+                        $('button[type="submit"]').removeAttr('disabled');
+                    }else {
+                        $('#message').text('原密码不正确');
+                        {# 原密码不正确，禁用按钮。 #}
+                        $('button[type="submit"]').attr('disabled', 'disabled');
+                    }
+                }
+                })
+            }
+
+        })
+    </script>
+{% endblock %}

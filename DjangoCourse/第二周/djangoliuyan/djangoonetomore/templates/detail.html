@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>新闻详情页</title>
+    </head>
+    <body>
+        <h1>标题:{{ new.new_name }}</h1>
+        {#根据从表的数据直接从模板中，查询主表的数据，不一定非得在views.py中查询， #}
+        <span>作者:{{ new.news_author.author_name }}</span>
+        <span>类型: {{ new.news_type.type_name }}</span>
+        <span>标签: {{ new.news_tag.tag_name }}</span>
+        <br>
+        <h3>主要内容:{{ new.new_content }}</h3>
+    </body>
+</html>

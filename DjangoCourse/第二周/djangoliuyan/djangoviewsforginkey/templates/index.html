@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>通用视图类</title>
+    </head>
+    <body>
+        <form action="/index/100/" method="post">
+            {% csrf_token %}
+            <input type="text" name="a" placeholder="输入a">
+            <br>
+            <input type="text" name="b" placeholder="输入b">
+            <br>
+            <button type="submit">计算</button>
+        </form>
+        {% if result %}
+            <h1>计算结果:{{ result }}</h1>
+        {% endif %}
+        <p>{{ c1.c_name }}所有学生</p>
+         {% for stu in stus %}
+             <p>{{ stu.s_name }}</p>
+         {% endfor %}
+        <h1>{{ s1.s_name }}所属的班级:{{ name }}</h1>
+    </body>
+</html>

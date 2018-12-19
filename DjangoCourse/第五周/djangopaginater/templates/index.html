@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Django分页</title>
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+    <nav aria-label="Page navigation">
+        {% for data in page.object_list %}
+            <p>{{ data.id }}-{{ data.name }}-{{ data.age }}</p>
+        {% endfor %}
+
+        <ul class="pagination">
+            {% if page.has_previous %}
+                {# page.has_previous:判断当前页page是否含有上一页的属性    #}
+                {# page.previous_page_number：上一页的页码  #}
+                <li>
+                <a href="?page={{ page.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">上一页</span>
+                </a>
+                </li>
+            {% endif %}
+            {# 每次点击页码，都会从头开始循环       #}
+            {% for page_number in page.paginator.page_range %}
+                {% if page_number == page.number %}
+                    {# 如果当前查询的页码和当前循环的页码刚好相等         #}
+                    <li class="active"><a href="?page={{ page_number }}">{{ page_number }}</a></li>
+                {% endif %}
+                    <li class=""><a href="?page={{ page_number }}">{{ page_number }}</a></li>
+            {% endfor %}
+
+            {% if page.has_next %}
+                <li>
+                    <a href="?page={{ page.next_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">下一页</span>
+                    </a>
+                </li>
+            {% endif %}
+
+
+      </ul>
+    </nav>
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>

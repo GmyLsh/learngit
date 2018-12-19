@@ -1,0 +1,72 @@
+{% load customtag %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>django分页升级</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <style>
+        #test{
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <table class="table">
+        <caption class="text-center">用户信息表</caption>
+        <thread>
+            <tr class="text-center">
+                <td>ID</td>
+                <td>用户姓名</td>
+                <td>用户年龄</td>
+            </tr>
+        </thread>
+        {% for user in page.object_list %}
+        <tr class="text-center">
+			<td>{{ user.id }}</td>
+			<td>{{ user.name }}</td>
+			<td>{{ user.age }}</td>
+		</tr>
+        {% endfor %}
+    </table>
+    <div id="test">
+        <ul class="pagination">
+            {% if page.has_previous %}
+            <li>
+			  <a href="?page={{ page.previous_page_number }}" aria-label="Previous">
+				<span aria-hidden="true">&laquo;上一页</span>
+			  </a>
+			</li>
+            {% endif %}
+			{% autoescape off %}
+                {% custom_paginator page %}
+			{% endautoescape %}
+            {% if page.has_next %}
+            <li>
+			  <a href="?page={{ page.next_page_number }}" aria-label="Next">
+				<span aria-hidden="true">下一页&raquo;</span>
+			  </a>
+			</li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+    <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            {# each()类似与for循环，找到每一个a标签页码，让这些a标签分别执行each()中的匿名函数。 #}
+            $('.pagination > li > a').each(function () {
+                {# 获取当前遍历到这个a标签的文本内容，然后和page.number进行比较，如果当前a标签的文本数字和page.number的值相等，就把这个li标记为高亮状态。 #}
+                {# $(this)指的就是遍历出来的a元素 #}
+                if ($(this).html() == {{ page.number }}){
+                    {# 获取当前a标签的父标签li，并添加类名active #}
+                    $(this).parent().addClass('active');
+                }
+            })
+        })
+    </script>
+</body>
+</html>

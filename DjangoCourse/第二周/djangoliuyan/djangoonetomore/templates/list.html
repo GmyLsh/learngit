@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>列表页</title>
+    </head>
+    <body>
+        <form action="/type/" method="get">
+            <input type="text" name="type" placeholder="请输入新闻类型(军事/经济)查询" value="{{ value }}">
+            <button type="submit">查询</button>
+        </form>
+        <form action="/detail" method="post">
+            {% csrf_token %}
+            <input type="text" name="title" placeholder="请输入新闻标题查询">
+            <button type="submit">查询</button>
+        </form>
+        <h1>{{ result }}</h1>
+        {% for new in news %}
+            {# new:表示的就是一个对象，这个对象对应的就是表中的一条数据。表中的字段对应的是这个对象的属性。  #}
+            {# 只展示新闻标题和作者。点击新闻标题，进入详情页，可以查下看详细信息         #}
+            {# 给每一个a标签绑定一个href，它的访问地址中需要获取新闻id的值，并将这个值传递到views.py中。     #}
+            {# 所有的a标签的请求都是GET请求，/detail/1  /detail/2/  通过url传参  #}
+            <h1>标题: <a href="/detail/{{ new.id }}/">{{ new.new_name }}</a></h1>
+            {# 根据新闻对象，查询这个新闻对应的作者，根据从表(新闻)的数据，查询主表(作者)的数据。       #}
+            <h3>作者: {{ new.news_author.author_name }}</h3>
+        {% endfor %}
+
+    </body>
+</html>

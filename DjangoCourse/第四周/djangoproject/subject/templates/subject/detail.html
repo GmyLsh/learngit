@@ -1,0 +1,26 @@
+{% extends 'master.html'%}
+{% block content %}
+    <div class="header">
+        <div class="container">
+            <h2>学科详情</h2>
+        </div>
+    </div>
+    <div class="container">
+        <dl>
+            <dt>学科名称</dt>
+            <dd>{{ subject.name }}</dd>
+            <dt>学费</dt>
+            <dd>￥{{ subject.amount }}</dd>
+            <dt>学时</dt>
+            <dd>{{ subject.days }}天</dd>
+            <dt>承诺</dt>
+            <dd>{{ subject.assurance }}</dd>
+            <dt>备注</dt>
+            <dd>{{ subject.remark }}</dd>
+        </dl>
+        <p>该学科是由 {{ subject.creater.username }} 在 {{ subject.create_time }} 时间创建。</p>
+        <p>该学科是由 {{ subject.updater.username }} 在 {{ subject.update_time }} 时间修改。</p>
+        <hr>
+    </div>
+{% endblock %}
+

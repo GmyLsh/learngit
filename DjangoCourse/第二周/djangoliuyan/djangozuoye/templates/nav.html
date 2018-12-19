@@ -1,0 +1,46 @@
+{% extends 'index.html' %}
+{% block link %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-default ">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <!-- button 以及内部的三个span标签，会在屏幕缩小时将导航条上的列表转化为一个菜单栏按钮(汉堡包菜单)，将其设置为下拉式列表样式-->
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">智游教育</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="#">公司介绍 <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">公司风采</a></li>
+                <li><a href="#">公司食堂</a></li>
+                <li><a href="#">公司大楼</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <form class="navbar-form navbar-left">
+                <div class="form-group">
+                  <input  type="text" class="form-control" placeholder="请输入关键字...">
+                </div>
+                <button type="submit col-md-offset-3" class="btn btn-default">搜索</button>
+              </form>
+              <div id="logindiv" class="navbar-btn navbar-right">
+                  <button class="btn btn-default col-xs-12 col-sm-6" type="submit">登录</button>
+                  <button class="btn btn-default col-xs-12 col-sm-6 register" type="submit">注册</button>
+              </div>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+
+        <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+{% endblock %}

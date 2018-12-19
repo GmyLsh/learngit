@@ -1,0 +1,27 @@
+{% extends 'master.html' %}
+{% block content %}
+    <div class="header">
+        <div class="container">
+            <h2>个人信息</h2>
+        </div>
+    </div>
+    <div class="container">
+        <form action="{% url 'user_update' %}" method="post">
+            {% csrf_token %}
+            <dl>
+                <dt>昵称:</dt>
+                <dd><input type="text" placeholder="{{ request.user.nickname }}" name="nickname"></dd>
+                <dt>电话:</dt>
+                <dd><input type="text" placeholder="{{ request.user.mobile }}" name="mobile"></dd>
+                <dt>住址:</dt>
+                <dd><input type="text" placeholder="{{ request.user.address }}" name="address"></dd>
+                <dt>性别:</dt>
+                <dd><input type="text" placeholder="{{ request.user.sex }}" name="sex"></dd>
+                <dt>个人简介:</dt>
+                <dd>主人很懒，什么也没有留下。</dd>
+            </dl>
+            <button type="submit">修改</button>
+        </form>
+        <hr>
+    </div>
+{% endblock %}
